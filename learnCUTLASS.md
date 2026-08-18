@@ -145,3 +145,18 @@ Epilogue
 D
 
 这就开始和你自己写 CUDA GEMM 的代码高度对应了。
+
+你现在这里先记死一句就行：
+
+threadblock_tile_offset.m/n
+= 当前 CTA 负责哪个 C tile
+
+
+threadblock_tile_offset.k
+= 当前 CTA 属于哪个 K partition（普通 GEMM 通常就是 0）
+
+
+真正遍历 K 的循环
+= 后面的 gemm_k_iterations / Mma mainloop
+
+把这个搞清楚之后，再往下看代码时，看到 threadblock_tile_offset.k() 就不会误以为它是那个 for(k...) 的 k 了。
